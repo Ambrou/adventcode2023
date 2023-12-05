@@ -146,35 +146,27 @@ unsigned long treatPartOne(const std::vector<std::string>& lines)
             if(tag)
             {
                 std::string number{};
-                // if(isdigit(lines[i][j]))
-                // {
-                //     number += lines[i][j];
-                // }
-                // j++;
-                // while(isdigit(lines[i][j]))
-                // {
-                //     number += lines[i][j];
-                //     j++;
-                //     if(j == lines[i].size())
-                //     {
-                //         break;
-                //     }
-                // };
+                // Search statup number
+                while(j > 0 && isdigit(lines[i][j-1]))
+                {
+                    j--;
+                };
 
-                // while(j < lines[i].size() - 1)
-                // {
-                //     if(isdigit(lines[i][j]))
-                //     {
-                //         number += lines[i][j];
-                //     }
-                //     j++;
-                //     if(!isdigit(lines[i][j]))
-                //     {
-                //         break;
-                //     }
-                // };
+                do
+                {
+                    if(isdigit(lines[i][j]))
+                    {
+                        number += lines[i][j];
+                    }
+                    j++;
+                }while(j != lines[i].size() - 1 && isdigit(lines[i][j]));
+
+                if(number.size() !=0)
+                {
+                    //std::cout << number <<  std::endl;
+                    result += std::stoul(number);
+                }
                 
-                std::cout << number << std::endl;
             }
         }
         //std::cout << std::endl;
