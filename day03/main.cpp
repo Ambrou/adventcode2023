@@ -134,39 +134,43 @@ unsigned long treatPartOne(const std::vector<std::string>& lines)
         for(int j = 0; j < lines[i].size(); ++j)
         {
             //std::cout << lines[i][j];
-            bool tag = false;
-            checkDown(tag, lines, i, j);
-            checkUp(tag, lines, i, j);
-            checkLeft(tag, lines, i, j);
-            checkRight(tag, lines, i, j);
-            checkUpRight(tag, lines, i, j);
-            checkDownRight(tag, lines, i, j);
-            checkUpLeft(tag, lines, i, j);
-            checkDownLeft(tag, lines, i, j);
-            if(tag)
+            if(isdigit(lines[i][j]))
             {
-                std::string number{};
-                // Search statup number
-                while(j > 0 && isdigit(lines[i][j-1]))
+                bool tag = false;
+                checkDown(tag, lines, i, j);
+                checkUp(tag, lines, i, j);
+                checkLeft(tag, lines, i, j);
+                checkRight(tag, lines, i, j);
+                checkUpRight(tag, lines, i, j);
+                checkDownRight(tag, lines, i, j);
+                checkUpLeft(tag, lines, i, j);
+                checkDownLeft(tag, lines, i, j);
+                if(tag)
                 {
-                    j--;
-                };
-
-                do
-                {
-                    if(isdigit(lines[i][j]))
+                    //std::cout << "tag at line " << i << " and column " << j << " with value " << lines[i][j] << std::endl;
+                    std::string number{};
+                    // Search statup number
+                    while(j > 0 && isdigit(lines[i][j-1]))
                     {
-                        number += lines[i][j];
-                    }
-                    j++;
-                }while(j != lines[i].size() - 1 && isdigit(lines[i][j]));
+                        j--;
+                    };
 
-                if(number.size() !=0)
-                {
-                    //std::cout << number <<  std::endl;
-                    result += std::stoul(number);
+                    do
+                    {
+                        if(isdigit(lines[i][j]))
+                        {
+                            number += lines[i][j];
+                        }
+                        j++;
+                    }while(j != lines[i].size() - 1 && isdigit(lines[i][j]));
+
+                    if(number.size() != 0)
+                    {
+                        std::cout << number <<  std::endl;
+                        result += std::stoul(number);
+                    }
+                    
                 }
-                
             }
         }
         //std::cout << std::endl;
