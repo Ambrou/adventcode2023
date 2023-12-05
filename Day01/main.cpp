@@ -54,6 +54,8 @@ unsigned long treatPartTwo()
 
     std::map<std::string, std::size_t> numbers = {{"0", -1}, {"1", -1}, {"2", -1}, {"3", -1}, {"4", -1}, {"5", -1}, {"6", -1}, {"7", -1}, {"8", -1}, {"9", -1}, {"one", -1}, {"two", -1}, {"three", -1}, {"four", -1}, {"five", -1}, {"six", -1}, {"seven", -1}, {"eight", -1}, {"nine", -1}};
     std::map<std::string, std::size_t> rnumbers = {{"0", 0}, {"1", 0}, {"2", 0}, {"3", 0}, {"4", 0}, {"5", 0}, {"6", 0}, {"7", 0}, {"8", 0}, {"9", 0}, {"one", 0}, {"two", 0}, {"three", 0}, {"four", 0}, {"five", 0}, {"six", 0}, {"seven", 0}, {"eight", 0}, {"nine", 0}};
+    std::map<std::string, unsigned long> strToInt = {{"0", 0}, {"1", 1}, {"2", 2}, {"3", 3}, {"4", 4}, {"5", 5}, {"6", 6}, {"7", 7}, {"8", 8}, {"9", 9}, {"zero", 0}, {"one", 1}, {"two", 2}, {"three", 3}, {"four", 4}, {"five", 5}, {"six", 6}, {"seven", 7}, {"eight", 8}, {"nine", 9}};
+    
     const auto isDigit = [](char c){return isdigit(c);};
     const auto toNumber = [](char c){return c - 0x30;};
     
@@ -64,7 +66,6 @@ unsigned long treatPartTwo()
         std::pair<std::string, std::size_t> firstNumber = {"no", 65536};
 
         
-        std::cout << line << std::endl;
         // search first digit or number
         for(auto& number : numbers)
         {
@@ -83,29 +84,16 @@ unsigned long treatPartTwo()
             number.second = line.rfind(number.first);
             if(number.second != std::string::npos)
             {
-                if(number.second > lastNumber.second)
+                if(number.second >= lastNumber.second)
                 {
                     lastNumber.second = number.second;
                     lastNumber.first = number.first;
                 }
             }
-            
-
         }
-        std::cout << "First number " <<  firstNumber.first << std::endl;
-        std::cout << "Last number  " <<  lastNumber.first << std::endl;
-        // std::size_t firstPosition = 65535;
-        // std::for_each(std::cbegin(numbers), std::cend(numbers), [&firstPosition, &line](std::string number){ firstPosition = std::min(firstPosition, line.find(number));});
-        // const auto firstCharNumber = std::find_if(begin(line), end(line), isDigit);
-
-        // // find last number
-        // const auto lastCharNumber = std::find_if(rbegin(line), rend(line), isDigit);
+        std::cout << line << " " << (strToInt[firstNumber.first] * 10) + strToInt[lastNumber.first] << std::endl;
+        result += (strToInt[firstNumber.first] * 10) + strToInt[lastNumber.first];
         
-        // // add them
-        // const auto firstNumber = toNumber(*firstCharNumber);
-        // const auto lastNumber = toNumber(*lastCharNumber);
-        
-        // result += (firstNumber * 10) + lastNumber;
     }
     return result;
 }
