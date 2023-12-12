@@ -11,7 +11,7 @@
 unsigned long treatPartOne(const std::vector<std::string>& lines);
 unsigned long treatPartTwo(const std::vector<std::string>& lines);
 std::vector<std::string> parseInput();
-void solve();
+
 
 int main()
 {

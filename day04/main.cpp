@@ -95,7 +95,42 @@ class PartTwoResolver : public Resolving
 public:
     std::uint64_t resolve(const Cards& cards) override
     {
+        std::map<std::uint64_t, std::uint64_t> matchesFound{};
+        std::map<std::uint64_t, std::uint64_t> cardInstance{};
         std::uint64_t result{};
+
+        std::for_each(std::cbegin(cards), std::cend(cards), [&cardInstance](const auto& card)
+        {
+            cardInstance[card.numero] = 1;
+        });
+
+        std::for_each(std::cbegin(cards), std::cend(cards), [&matchesFound, &cardInstance](const auto& card)
+        {
+            std::uint64_t matches{0};
+            const auto& youHaveNumbers = card.youHaveNumber.numbers;
+            std::for_each(std::cbegin(card.winningNumber.numbers), std::cend(card.winningNumber.numbers), [&youHaveNumbers, &matches](const auto& number )
+            {
+                if(std::find(std::cbegin(youHaveNumbers), std::cend(youHaveNumbers), number) != std::cend(youHaveNumbers))
+                {
+                    matches++;
+                }
+            });
+            matchesFound[card.numero] = matches;
+        });
+
+        std::for_each(std::cbegin(cards), std::cend(cards), [&matchesFound, &cardInstance](const auto& card)
+        {
+            for(std::uint64_t iLoop = 1; iLoop <= matchesFound[card.numero]; ++iLoop)
+            {
+                cardInstance[card.numero + iLoop] += cardInstance[card.numero];
+            }
+        });
+
+        std::for_each(std::cbegin(cards), std::cend(cards), [&result, &cardInstance, &matchesFound](const auto& card)
+        {
+            result += cardInstance[card.numero];
+        });
+
         return result;
     }
 };
